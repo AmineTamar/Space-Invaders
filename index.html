@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <script src="scripts.js"></script>
 
 
@@ -19,4 +21,23 @@
         Nochmal Spielen
      </button>
 </body>
+
+<script>
+   
+
+    // Disable pinch-to-zoom
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault(); // Prevents pinch-to-zoom
+        }
+    }, { passive: false });
+
+    // Disable double-tap zoom
+    document.addEventListener('dblclick', function(e) {
+        e.preventDefault(); // Prevents double-tap zoom
+    }, { passive: false });
+
+
+</script>
+
 </html>

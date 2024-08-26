@@ -3,23 +3,22 @@ let tileSize = 32;
 let rows = 16;
 let columns = 16;
 
-let board;
-let boardWidth = 375 // 32 * 16
-let boardHeight = tileSize * rows; // 32 * 16
+let boardWidth = tileSize * columns;
+let boardHeight = tileSize * rows;
 let context;
 
 //ship
 let shipWidth = tileSize * 2;
 let shipHeight = tileSize;
-let shipX = tileSize * columns / 2 - tileSize +100;
-let shipY = tileSize * rows - tileSize * 2 ;
+let shipX = tileSize * columns / 2 - tileSize;
+let shipY = tileSize * rows - tileSize * 2;
 
 let ship = {
     x: shipX,
     y: shipY,
     width: shipWidth,
     height: shipHeight
-}
+};
 
 let shipImg;
 let shipVelocityX = 10; // ship moving speed
@@ -49,46 +48,29 @@ let rightPressed = false;
 let shooting = false;
 
 window.onload = function () {
-
- /*   if (window.innerWidth > 800) {
-        tileSize = 32*2;
-         rows = 16;
-         columns = 16*2;
-         ship.height = shipHeight*2
-         ship.width = shipWidth*2
-       
-         
-         alienWidth = alienWidth*2
-         alienHeight = alienHeight*2
-         
-       
-
-         boardWidth = 375 *2 // 32 * 16
-         boardHeight = 800 // 32 * 16
-    }
- */
-
+    // Check if the display width is more than 800px
     if (window.innerWidth > 800) {
-        tileSize = 32 * 2;
-        rows = 16;
-        columns = 16 * 2;
-
-        // Update board dimensions
+        tileSize *= 2;
+        columns *= 2;
+        rows *= 2;
         boardWidth = tileSize * columns /2;
-        boardHeight = 800;
+        boardHeight = tileSize * rows;
 
-        // Adjust ship dimensions and position
-        ship.width = shipWidth = tileSize * 2;
-        ship.height = shipHeight = tileSize;
-        ship.x = boardWidth /2 -ship.width/2
-        ship.y = boardHeight - tileSize * 2;
+        shipWidth = tileSize * 2;
+        shipHeight = tileSize;
+        shipX = tileSize * columns / 2 - tileSize;
+        shipY = tileSize * rows - tileSize * 2;
 
-        // Adjust alien dimensions and positions
         alienWidth = tileSize * 2;
         alienHeight = tileSize;
         alienX = tileSize;
         alienY = tileSize;
     }
+
+    ship.x = shipX;
+    ship.y = shipY;
+    ship.width = shipWidth;
+    ship.height = shipHeight;
 
     initializeBoard();
     loadAssets();
@@ -200,7 +182,7 @@ function clearUsedBullets() {
     }
 }
 
-/*function checkNextLevel() {
+function checkNextLevel() {
     if (alienCount == 0) {
         score += alienColumns * alienRows * 100;
         alienColumns = Math.min(alienColumns + 1, columns / 2 - 2);
@@ -210,57 +192,7 @@ function clearUsedBullets() {
         bulletArray = [];
         createAliens();
     }
-} */
-  
-    function checkNextLevel() {
-        if (alienCount == 0) {
-            // Increment score based on the current number of aliens
-            score += alienColumns * alienRows * 100;
-    
-            // Determine maximum size based on screen width
-            const maxColumns = window.innerWidth > 800 ? 7 : Math.min(5, Math.floor(boardWidth / alienWidth));
-            const maxRows = window.innerWidth > 800 ? 7 : Math.min(5, Math.floor((ship.y - alienHeight) / alienHeight));
-    
-            // Lock the maximum size of alien formation depending on screen size
-            alienColumns = Math.min(alienColumns + 1, maxColumns);
-            alienRows = Math.min(alienRows + 1, maxRows);
-    
-            // Slightly increase the alien movement speed, but cap it to avoid excessive speed
-            const maxSpeed = window.innerWidth > 800 ? 5 : 3;
-            alienVelocityX = alienVelocityX > 0 ? Math.min(alienVelocityX + 0.2, maxSpeed) : Math.max(alienVelocityX - 0.2, -maxSpeed);
-    
-            // Reset alien and bullet arrays for the next level
-            alienArray = [];
-            bulletArray = [];
-    
-            // Create the new aliens
-            createAliens();
-        }
-    }
-    
-    function createAliens() {
-        alienArray = [];
-    
-        // Calculate the starting X position to center the alien formation
-        let startX = (boardWidth - (alienColumns * alienWidth)) / 2;
-        let startY = alienY;
-    
-        for (let c = 0; c < alienColumns; c++) {
-            for (let r = 0; r < alienRows; r++) {
-                let alien = {
-                    img: alienImg,
-                    x: startX + c * alienWidth,
-                    y: startY + r * alienHeight,
-                    width: alienWidth,
-                    height: alienHeight,
-                    alive: true
-                };
-                alienArray.push(alien);
-            }
-        }
-        alienCount = alienArray.length;
-    }
-    
+}
 
 function displayScore() {
     context.fillStyle = "white";
@@ -290,7 +222,7 @@ function handleKeyUp(e) {
     }
 }
 
-/*function createAliens() {
+function createAliens() {
     for (let c = 0; c < alienColumns; c++) {
         for (let r = 0; r < alienRows; r++) {
             let alien = {
@@ -305,9 +237,7 @@ function handleKeyUp(e) {
         }
     }
     alienCount = alienArray.length;
-} */
-
-   
+}
 
 function shoot() {
     if (gameOver) {
@@ -369,3 +299,4 @@ function handleTouchEnd(e) {
     rightPressed = false;
     shooting = false;
 }
+

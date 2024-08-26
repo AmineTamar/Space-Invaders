@@ -4,9 +4,9 @@ body {
    
 }
 #board {
-    background-color: black;
-    background-image: url(assets/background.jpg);
-    background-size: cover;
+    background-color: rgb(16, 63, 94);
+  /*  background-image: url(assets/background.jpg);
+    background-size: cover; */
 }
     
 button{
